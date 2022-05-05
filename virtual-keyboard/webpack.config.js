@@ -1,5 +1,6 @@
 const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -9,10 +10,29 @@ module.exports = {
     },
     output: {
         filename: 'main.js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, './dist'),
     },
     plugins: [
-        new ESLintPlugin,
+        new ESLintPlugin({
+            baseConfig: {
+                "env": {
+                    "browser": true,
+                    "es2021": true
+                },
+                "extends": "eslint:recommended",
+                "parserOptions": {
+                    "ecmaVersion": "latest",
+                    "sourceType": "module"
+                },
+                "rules": {
+                }
+            },
+
+        }),
+        new HtmlWebpackPlugin({
+            title: "Virtual keyboard",
+            
+        }),
     ],
     module: {
         rules: [
