@@ -1,7 +1,11 @@
-.test {
-  height: 200px;
-  width: 200px;
-  background: red;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /*# sourceMappingURL=main.css.map */
