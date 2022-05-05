@@ -104,3 +104,4 @@ dist
 .tern-port
 
 .idea/
+./virtual-keyboard/package-lock.json
