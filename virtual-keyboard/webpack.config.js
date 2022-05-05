@@ -31,7 +31,8 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             title: "Virtual keyboard",
-            
+            template: path.resolve(__dirname, './src/index.html'),
+            filename: "index.html",
         }),
     ],
     module: {
