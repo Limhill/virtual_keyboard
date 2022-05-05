@@ -1,1 +1,1 @@
-alert('Hi!')
+import './main.css';
