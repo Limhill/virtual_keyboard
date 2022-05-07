@@ -1,16 +1,6 @@
 import "./main.sass";
 import {appendMultipleChildren} from "./_functions";
-
-// Объявляем все необходимые переменные
-const BODY = document.querySelector('.body');
-const HEADER = document.createElement('h1');
-const TEXTAREA = document.createElement('textarea');
-const WRAPPER = document.createElement('div');
-const KEYBOARD = document.createElement('div');
-const ROW = document.createElement('div');
-const KEYS = document.createElement('div');
-const KEY = document.createElement('div');
-const ADDITIONAL_KEY_VALUE = document.createElement('div');
+import {BODY, HEADER, TEXTAREA, WRAPPER, KEYBOARD, ROW, KEYS, KEY} from './_constants';
 
 // Присваиваем классы
 HEADER.className = 'header';
@@ -20,7 +10,6 @@ KEYBOARD.className = 'keyboard';
 ROW.className = 'row';
 KEYS.className = 'keys';
 KEY.className = 'key';
-ADDITIONAL_KEY_VALUE.className = 'key__value_additional';
 
 // Формируем каркас страницы
 BODY.appendChild(WRAPPER);
@@ -50,9 +39,12 @@ let values = [
     ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
     ['Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', "Щ", "З", "Х", "Ъ", "\\", "DEL"],
     ['Caps Lock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'ENTER'],
-    ['Shift', '\\', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '/', '1', 'Shift'],
-    ['Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', '4', '2', '6'],
+    ['Shift', '\\', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '/', '↑', 'Shift'],
+    ['Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Ctrl', '←', '↓', '→'],
 ];
+
+//Добавляю значения для кнопок
+let additionalValues = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+'];
 
 for (let i = 0; i < keysCollection.length; i++) {
     let row = keysCollection[i].querySelectorAll('.key');
@@ -60,6 +52,34 @@ for (let i = 0; i < keysCollection.length; i++) {
         key.textContent = values[i][index];
     })
 }
+
+//В первый ряд добавляю дополнительные значения
+let firstRow = keysCollection[0].querySelectorAll('.key');
+firstRow.forEach((item, index) => {
+    let additionalValue = document.createElement('span');
+    additionalValue.className = 'additional-value';
+    additionalValue.textContent = additionalValues[index];
+    let firstChild = item.firstChild;
+    item.insertBefore(additionalValue, firstChild);
+});
+
+//Устанавливаю длину для кнопок
+let allKeys = document.querySelectorAll('.key');
+let shifts = [];
+allKeys.forEach((item) => {
+    let doubleWidthKeys = ['Caps Lock', 'ENTER', 'Backspace'];
+    if (doubleWidthKeys.includes(item.textContent)) {
+        item.classList.add('key_double-width');
+    }
+    if (item.textContent === 'Shift') {
+       shifts.push(item);
+    }
+    if (item.textContent === ' ') {
+        item.classList.add('key_space');
+    }
+})
+shifts[0].classList.add(('key_double-width'));
+
 
 
 

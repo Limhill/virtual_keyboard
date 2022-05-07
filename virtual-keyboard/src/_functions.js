@@ -5,11 +5,6 @@ function appendMultipleChildren(parentElement, childElement, numberOfCopies, dee
     }
 }
 
-// function setKeyValues (elementCollection) {
-//     rows.forEach((item, index) => {
-//         let row = item.querySelectorAll('.key');
-//
-//     })
-// }
+
 
 export {appendMultipleChildren};

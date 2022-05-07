@@ -6,7 +6,9 @@ module.exports = {
     mode: 'development',
     entry: './src/index.js',
     devServer: {
-        static: './dist',
+        static: {
+            directory: path.resolve(__dirname, './dist'),
+        }
     },
     output: {
         filename: 'main.js',

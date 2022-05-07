@@ -8,7 +8,7 @@
   grid-template-columns: 100%
 
 .keyboard
-  background-color: var(--keyboard-bg-color)
+  background-color: #d062ef
   margin: 75px auto
   padding: 20px 10px
   border-radius: 15px
@@ -19,16 +19,12 @@
   box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22)
 
 .row
-  display: grid
-  grid-template-columns: auto 0.2fr 0.2fr
-  grid-gap: 25px
   padding: 5px
   margin-top: 5px
 
 .keys
   display: flex
   flex-flow: row nowrap
-  justify-content: flex-start
   align-items: center
 
 
@@ -36,7 +32,6 @@
 .wrapper
   display: flex
   flex-direction: column
-  justify-content: center
   align-items: center
   max-width: 1200px
   margin-left: auto
@@ -62,6 +57,10 @@
   padding: 0 2px
   border-radius: 10px
   box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2)
+  &_double-width
+    width: 108px
+  &_space
+    width: 400px
 
 
 .key:hover,
