@@ -1,0 +1,31 @@
+.key
+  background-color: #353535
+  color: #fdf6ff
+  font-family: var(--font-m)
+  font-size: 12px
+  width: 46px
+  height: 40px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  text-align: center
+  margin: 0 4px
+  padding: 0 2px
+  border-radius: 10px
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2)
+  &_double-width
+    width: 108px
+  &_pressed
+    cursor: pointer
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2)
+    transform: translateY(3px)
+    background: #61c29d
+    transition: all 0.1s ease-in-out
+
+.key:hover
+  background: #61c29d
+  cursor: pointer
+
+.space
+  width: 400px

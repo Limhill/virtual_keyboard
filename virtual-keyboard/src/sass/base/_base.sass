@@ -6,6 +6,8 @@
   display: grid
   grid-template-rows: 1fr auto
   grid-template-columns: 100%
+  font-family: sans-serif
+  font-weight: bold
 
 .keyboard
   background-color: #d062ef
@@ -21,13 +23,9 @@
 .row
   padding: 5px
   margin-top: 5px
-
-.keys
   display: flex
   flex-flow: row nowrap
   align-items: center
-
-
 
 .wrapper
   display: flex
@@ -41,34 +39,4 @@
   font-size: 16px
   resize: none
 
-.key
-  background-color: #353535
-  color: #fdf6ff
-  font-family: var(--font-m)
-  font-size: 12px
-  width: 46px
-  height: 40px
-  display: flex
-  flex-direction: column
-  justify-content: center
-  align-items: center
-  text-align: center
-  margin: 0 4px
-  padding: 0 2px
-  border-radius: 10px
-  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2)
-  &_double-width
-    width: 108px
-  &_space
-    width: 400px
 
-
-.key:hover,
-.key-press
-  cursor: pointer
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2)
-  transform: translateY(3px)
-  transition: all 0.1s ease-in-out
-  -webkit-transition: all 0.1s ease-in-out
-  -moz-transition: all 0.1s ease-in-out
-  -o-transition: all 0.1s ease-in-out

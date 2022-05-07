@@ -5,6 +5,19 @@ function appendMultipleChildren(parentElement, childElement, numberOfCopies, dee
     }
 }
 
+function addKeyPress(e) {
+    let targetItem = e.target;
+    if (e.target.classList.contains('key') && !e.target.classList.contains('key_pressed')) {
+        targetItem.classList.add('key_pressed');
+    }
 
+}
 
-export {appendMultipleChildren};
+function removeKeyPress(e) {
+    let targetItem = e.target;
+    if (e.target.classList.contains('key') && e.target.classList.contains('key_pressed')) {
+        targetItem.classList.remove('key_pressed');
+    }
+}
+
+export {appendMultipleChildren, addKeyPress, removeKeyPress};
