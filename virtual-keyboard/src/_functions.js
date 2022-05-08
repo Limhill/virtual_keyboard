@@ -1,5 +1,5 @@
 function appendMultipleChildren(parentElement, childElement, numberOfCopies, deepCopies = false) {
-  for (let i = 0; i < numberOfCopies; i++) {
+  for (let i = 0; i < numberOfCopies; i += 1) {
     const clone = childElement.cloneNode(deepCopies);
     parentElement.appendChild(clone);
   }

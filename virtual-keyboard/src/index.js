@@ -2,7 +2,7 @@ import './main.sass';
 import { appendMultipleChildren, addKeyPress, removeKeyPress } from './_functions';
 import {
   BODY, HEADER, TEXTAREA, WRAPPER, KEYBOARD, ROW, KEY,
-  KEYS_VALUES, KEYS_ADDITIONAL_VALUES,
+  KEYS_VALUES, KEYS_ADDITIONAL_VALUES, KEY_CODES,
 } from './_constants';
 
 // Присваиваем классы
@@ -35,11 +35,12 @@ TEXTAREA.setAttribute('cols', '120');
 const KEYS_COLLECTION = document.querySelectorAll('.key');
 const lang = 'ru';
 // Добавляю значения для кнопок
-for (let i = 0; i < KEYS_COLLECTION.length; i++) {
+for (let i = 0; i < KEYS_COLLECTION.length; i += 1) {
   KEYS_COLLECTION.forEach((key, index) => {
-    key.textContent = KEYS_VALUES[lang][index];
+    KEYS_COLLECTION[index].textContent = KEYS_VALUES[lang][index];
     key.setAttribute('value', KEYS_VALUES[lang][index]);
     key.setAttribute('value_lower-case', KEYS_VALUES[lang][index].toLowerCase());
+    key.setAttribute('key_code', KEY_CODES[index]);
   });
 }
 
@@ -62,10 +63,26 @@ KEYS_COLLECTION.forEach((item) => {
   if (item.textContent === ' ') item.classList.add('space');
   if (item.textContent === 'Shift' && shifts === 0) {
     item.classList.add('key_double-width');
-    shifts++;
+    shifts += 1;
   }
 });
 shifts = 0;
 
 KEYBOARD.addEventListener('mousedown', addKeyPress);
 KEYBOARD.addEventListener('mouseup', removeKeyPress);
+
+window.addEventListener('keydown', (e) => {
+  for (let i = 0; i < KEYS_COLLECTION.length; i += 1) {
+    if (e.code === KEYS_COLLECTION[i].getAttribute('key_code')) {
+      KEYS_COLLECTION[i].classList.add('key_pressed');
+    }
+  }
+});
+
+window.addEventListener('keyup', (e) => {
+  for (let i = 0; i < KEYS_COLLECTION.length; i += 1) {
+    if (e.code === KEYS_COLLECTION[i].getAttribute('key_code')) {
+      KEYS_COLLECTION[i].classList.remove('key_pressed');
+    }
+  }
+});
