@@ -1,8 +1,10 @@
 import './main.sass';
-import { appendMultipleChildren, addKeyPress, removeKeyPress } from './_functions';
+import {
+  appendMultipleChildren, addKeyPress, removeKeyPress, keyboardWork,
+} from './_functions';
 import {
   BODY, HEADER, TEXTAREA, WRAPPER, KEYBOARD, ROW, KEY,
-  KEYS_VALUES, KEYS_ADDITIONAL_VALUES, KEY_CODES,
+  KEYS, SPECIAL_KEYS, DOUBLE_WIDTH_KEYS,
 } from './_constants';
 
 // Присваиваем классы
@@ -33,40 +35,41 @@ TEXTAREA.setAttribute('rows', '10');
 TEXTAREA.setAttribute('cols', '120');
 
 const KEYS_COLLECTION = document.querySelectorAll('.key');
-const lang = 'ru';
-// Добавляю значения для кнопок
+const lang = 'en';
+const capsLock = true;
+
+// Добавляю коды для кнопок
 for (let i = 0; i < KEYS_COLLECTION.length; i += 1) {
   KEYS_COLLECTION.forEach((key, index) => {
-    KEYS_COLLECTION[index].textContent = KEYS_VALUES[lang][index];
-    key.setAttribute('value', KEYS_VALUES[lang][index]);
-    key.setAttribute('value_lower-case', KEYS_VALUES[lang][index].toLowerCase());
-    key.setAttribute('key_code', KEY_CODES[index]);
+    key.setAttribute('key_code', Object.keys(KEYS[index])[0]);
   });
 }
 
-// В первый ряд добавляю дополнительные значения
-const firstRow = KEYS_COLLECTION[0].querySelectorAll('.key');
-firstRow.forEach((item, index) => {
-  const additionalValue = document.createElement('span');
-  additionalValue.className = 'additional-value';
-  additionalValue.textContent = KEYS_ADDITIONAL_VALUES[index];
-  const { firstChild } = item;
-  item.insertBefore(additionalValue, firstChild);
-});
+// Добавляю текст внутрь кнопок
+for (let i = 0; i < KEYS_COLLECTION.length; i += 1) {
+  const keyCode = KEYS_COLLECTION[i].getAttribute('key_code');
+  if (!capsLock && !SPECIAL_KEYS.includes(KEYS[i][keyCode].main[lang])) {
+    KEYS_COLLECTION[i].textContent = KEYS[i][keyCode].main[lang].toLowerCase();
+  } else {
+    KEYS_COLLECTION[i].textContent = KEYS[i][keyCode].main[lang];
+  }
+}
+
+// Добавляю дополнительные значения
+for (let i = 0; i < KEYS_COLLECTION.length; i += 1) {
+  const keyCode = KEYS_COLLECTION[i].getAttribute('key_code');
+  if (KEYS[i][keyCode].additional) {
+    const additionalValue = document.createElement('span');
+    additionalValue.textContent = KEYS[i][keyCode].additional[lang];
+    KEYS_COLLECTION[i].insertBefore(additionalValue, KEYS_COLLECTION[i].firstChild);
+  }
+}
 
 // Устанавливаю длину для кнопок
-let shifts = 0;
 KEYS_COLLECTION.forEach((item) => {
-  const doubleWidthKeys = ['Caps Lock', 'ENTER', 'Backspace'];
-  if (doubleWidthKeys.includes(item.textContent)) item.classList.add('key_double-width');
-  if (item.textContent === 'Caps Lock') item.classList.add('caps-lock');
-  if (item.textContent === ' ') item.classList.add('space');
-  if (item.textContent === 'Shift' && shifts === 0) {
-    item.classList.add('key_double-width');
-    shifts += 1;
-  }
+  if (DOUBLE_WIDTH_KEYS.includes(item.getAttribute('key_code'))) item.classList.add('key_double-width');
+  if (item.getAttribute('key_code') === 'Space') item.classList.add('space');
 });
-shifts = 0;
 
 KEYBOARD.addEventListener('mousedown', addKeyPress);
 KEYBOARD.addEventListener('mouseup', removeKeyPress);
@@ -84,5 +87,12 @@ window.addEventListener('keyup', (e) => {
     if (e.code === KEYS_COLLECTION[i].getAttribute('key_code')) {
       KEYS_COLLECTION[i].classList.remove('key_pressed');
     }
+    setTimeout(() => {
+      KEYS_COLLECTION[i].classList.remove('key_pressed');
+    }, 100);
   }
 });
+
+KEYBOARD.addEventListener('mousedown', keyboardWork);
+
+TEXTAREA.focus();
