@@ -85,9 +85,6 @@ window.addEventListener('keyup', (e) => {
     if (e.code === KEYS_COLLECTION[i].getAttribute('key_code')) {
       KEYS_COLLECTION[i].classList.remove('key_pressed');
     }
-    setTimeout(() => {
-      KEYS_COLLECTION[i].classList.remove('key_pressed');
-    }, 1000);
   }
   if (e.code === 'CapsLock') {
     capsLock = !capsLock;
