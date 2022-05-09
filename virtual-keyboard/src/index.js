@@ -35,7 +35,7 @@ TEXTAREA.setAttribute('rows', '10');
 TEXTAREA.setAttribute('cols', '120');
 
 const KEYS_COLLECTION = document.querySelectorAll('.key');
-const lang = 'en';
+let lang = localStorage.getItem('lang');
 let capsLock = false;
 let shift = false;
 let bigLetters;
@@ -95,6 +95,7 @@ window.addEventListener('keyup', (e) => {
 KEYBOARD.addEventListener('mousedown', (e) => {
   const targetItem = e.target;
   const targetItemCode = targetItem.getAttribute('key_code');
+
   if ((targetItem.classList.contains('key') && !SPECIAL_KEYS.includes(targetItemCode))) {
     if (capsLock && !shift) {
       TEXTAREA.value += KEYS[targetItemCode].main[lang];
@@ -114,12 +115,31 @@ KEYBOARD.addEventListener('mousedown', (e) => {
       TEXTAREA.value += KEYS[targetItemCode].main[lang].toLowerCase();
     }
   }
+
   if (targetItemCode === 'CapsLock') {
     capsLock = !capsLock;
   }
+
   if (targetItemCode === 'ShiftLeft' || targetItemCode === 'ShiftRight') {
     shift = !shift;
     targetItem.classList.toggle('active');
+  }
+
+  if (targetItemCode === 'AltLeft' && shift) {
+    if (lang === 'en') {
+      lang = 'ru';
+      localStorage.setItem('lang', 'ru');
+    } else if (lang === 'ru') {
+      lang = 'en';
+      localStorage.setItem('lang', 'en');
+    }
+    shift = false;
+    KEYS_COLLECTION.forEach((key) => {
+      if (key.getAttribute('key_code') === 'ShiftLeft' || key.getAttribute('key_code') === 'ShiftRight') {
+        key.classList.remove('active');
+      }
+    });
+    renderingKeyText(KEYS_COLLECTION, lang);
   }
 });
 
