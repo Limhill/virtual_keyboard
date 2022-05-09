@@ -3,10 +3,10 @@ import {
   appendMultipleChildren, addKeyCode, renderingKeyText, addClassesForStyle,
   addKeyPress, removeKeyPress, writeInTextarea, deleteSymbolBeforeCursor,
   deleteSymbolAfterCursor,
-} from './_functions';
+} from './functions';
 import {
   BODY, HEADER, TEXTAREA, WRAPPER, KEYBOARD, ADDITIONAL_INFO, ROW, KEY, SPECIAL_KEYS, KEYS,
-} from './_constants';
+} from './constants';
 
 // Присваиваем классы
 HEADER.className = 'header';
@@ -38,7 +38,7 @@ TEXTAREA.setAttribute('rows', '10');
 TEXTAREA.setAttribute('cols', '120');
 
 const KEYS_COLLECTION = document.querySelectorAll('.key');
-let lang = localStorage.getItem('lang');
+let lang = localStorage.getItem('lang') || 'en';
 let capsLock = false;
 let shift = false;
 let bigLetters;

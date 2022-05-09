@@ -1,6 +1,6 @@
 import {
   DOUBLE_WIDTH_KEYS, TRIPLE_WIDTH_KEYS, KEYS, TEXTAREA,
-} from './_constants';
+} from './constants';
 
 function appendMultipleChildren(parentElement, childElement, numberOfCopies, deepCopies = false) {
   for (let i = 0; i < numberOfCopies; i += 1) {
