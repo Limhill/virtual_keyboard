@@ -60,10 +60,27 @@ function writeInTextarea(value) {
   const leftHalf = TEXTAREA.value.slice(0, start);
   const rightHalf = TEXTAREA.value.slice(start);
   TEXTAREA.value = leftHalf + value + rightHalf;
-  TEXTAREA.setSelectionRange(start + 1, start + 1);
+  if (value === '    ') {
+    TEXTAREA.setSelectionRange(start + 4, start + 4);
+  } else {
+    TEXTAREA.setSelectionRange(start + 1, start + 1);
+  }
+}
+
+function deleteSymbol() {
+  const start = TEXTAREA.selectionStart;
+  let leftHalf = TEXTAREA.value.slice(0, start);
+  leftHalf = leftHalf.slice(0, -1);
+  const rightHalf = TEXTAREA.value.slice(start);
+  TEXTAREA.value = leftHalf + rightHalf;
+  if (start === 0) {
+    TEXTAREA.setSelectionRange(start, start);
+  } else {
+    TEXTAREA.setSelectionRange(start - 1, start - 1);
+  }
 }
 
 export {
   appendMultipleChildren, addKeyCode, renderingKeyText, addClassesForStyle,
-  addKeyPress, removeKeyPress, writeInTextarea,
+  addKeyPress, removeKeyPress, writeInTextarea, deleteSymbol,
 };

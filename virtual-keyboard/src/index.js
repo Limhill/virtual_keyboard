@@ -1,7 +1,7 @@
 import './main.sass';
 import {
   appendMultipleChildren, addKeyCode, renderingKeyText, addClassesForStyle,
-  addKeyPress, removeKeyPress, writeInTextarea,
+  addKeyPress, removeKeyPress, writeInTextarea, deleteSymbol,
 } from './_functions';
 import {
   BODY, HEADER, TEXTAREA, WRAPPER, KEYBOARD, ADDITIONAL_INFO, ROW, KEY, SPECIAL_KEYS, KEYS,
@@ -152,7 +152,12 @@ KEYBOARD.addEventListener('mousedown', (e) => {
 
   if (targetItemCode === 'Tab') {
     e.preventDefault();
-    TEXTAREA.value += '    ';
+    const newValue = '    ';
+    writeInTextarea(newValue);
+  }
+
+  if (targetItemCode === 'Backspace') {
+    deleteSymbol();
   }
 });
 
