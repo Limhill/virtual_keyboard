@@ -1,5 +1,5 @@
 import {
-  DOUBLE_WIDTH_KEYS, KEYS, SPECIAL_KEYS, TEXTAREA,
+  DOUBLE_WIDTH_KEYS, TRIPLE_WIDTH_KEYS, KEYS, TEXTAREA,
 } from './_constants';
 
 function appendMultipleChildren(parentElement, childElement, numberOfCopies, deepCopies = false) {
@@ -18,15 +18,11 @@ function addKeyCode(listOfKeys) {
   }
 }
 
-function renderingKeyText(listOfKeys, lang, caps) {
+function renderingKeyText(listOfKeys, lang) {
   const keyList = listOfKeys;
   for (let i = 0; i < keyList.length; i += 1) {
     const keyCode = keyList[i].getAttribute('key_code');
-    if (!caps && !SPECIAL_KEYS.includes(keyCode)) {
-      keyList[i].textContent = KEYS[keyCode].main[lang].toLowerCase();
-    } else {
-      keyList[i].textContent = KEYS[keyCode].main[lang];
-    }
+    keyList[i].textContent = KEYS[keyCode].main[lang];
     if (KEYS[keyCode].additional) {
       const additionalValue = document.createElement('span');
       additionalValue.textContent = KEYS[keyCode].additional[lang];
@@ -39,6 +35,7 @@ function addClassesForStyle(listOfKeys) {
   const keyList = listOfKeys;
   keyList.forEach((item) => {
     if (DOUBLE_WIDTH_KEYS.includes(item.getAttribute('key_code'))) item.classList.add('key_double-width');
+    if (TRIPLE_WIDTH_KEYS.includes(item.getAttribute('key_code'))) item.classList.add('key_triple-width');
     if (item.getAttribute('key_code') === 'Space') item.classList.add('space');
   });
 }

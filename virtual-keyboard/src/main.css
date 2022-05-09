@@ -64,6 +64,9 @@
 .key_double-width {
   width: 108px;
 }
+.key_triple-width {
+  width: 168px;
+}
 .key_pressed {
   cursor: pointer;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);

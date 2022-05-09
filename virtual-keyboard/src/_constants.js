@@ -5,7 +5,8 @@ const WRAPPER = document.createElement('div');
 const KEYBOARD = document.createElement('div');
 const ROW = document.createElement('div');
 const KEY = document.createElement('div');
-const DOUBLE_WIDTH_KEYS = ['CapsLock', 'Enter', 'ShiftLeft', 'ShiftRight', 'Backspace'];
+const DOUBLE_WIDTH_KEYS = ['CapsLock', 'Enter', 'Backspace'];
+const TRIPLE_WIDTH_KEYS = ['ShiftLeft'];
 
 const KEYS = {
   Backquote: { main: { en: '`', ru: 'Ё' }, additional: { en: '~' } },
@@ -82,5 +83,5 @@ const SPECIAL_KEYS = [
 
 export {
   BODY, HEADER, TEXTAREA, WRAPPER, KEYBOARD, ROW, KEY,
-  KEYS, SPECIAL_KEYS, DOUBLE_WIDTH_KEYS,
+  KEYS, SPECIAL_KEYS, DOUBLE_WIDTH_KEYS, TRIPLE_WIDTH_KEYS,
 };

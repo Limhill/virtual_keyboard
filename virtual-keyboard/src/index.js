@@ -37,12 +37,19 @@ TEXTAREA.setAttribute('cols', '120');
 const KEYS_COLLECTION = document.querySelectorAll('.key');
 const lang = 'en';
 let capsLock = false;
+let shift = false;
+let bigLetters;
+
+if (capsLock && shift) bigLetters = false;
+if (capsLock && !shift) bigLetters = true;
+if (!capsLock && shift) bigLetters = true;
+if (!capsLock && !shift) bigLetters = false;
 
 // Добавляю коды для кнопок
 addKeyCode(KEYS_COLLECTION);
 
 // Добавляю текст внутрь кнопок
-renderingKeyText(KEYS_COLLECTION, lang, capsLock);
+renderingKeyText(KEYS_COLLECTION, lang);
 
 // Устанавливаю длину для кнопок
 addClassesForStyle(KEYS_COLLECTION);
@@ -61,6 +68,12 @@ window.addEventListener('keydown', (e) => {
     if (e.code === KEYS_COLLECTION[i].getAttribute('key_code')) {
       KEYS_COLLECTION[i].classList.add('key_pressed');
     }
+    if (e.code === 'ShiftLeft' && e.code === KEYS_COLLECTION[i].getAttribute('key_code')) {
+      KEYS_COLLECTION[i].classList.toggle('active');
+    }
+    if (e.code === 'ShiftRight' && e.code === KEYS_COLLECTION[i].getAttribute('key_code')) {
+      KEYS_COLLECTION[i].classList.toggle('active');
+    }
   }
 });
 
@@ -71,22 +84,42 @@ window.addEventListener('keyup', (e) => {
     }
     setTimeout(() => {
       KEYS_COLLECTION[i].classList.remove('key_pressed');
-    }, 400);
+    }, 1000);
+  }
+  if (e.code === 'CapsLock') {
+    capsLock = !capsLock;
+    renderingKeyText(KEYS_COLLECTION, lang, bigLetters);
   }
 });
 
 KEYBOARD.addEventListener('mousedown', (e) => {
   const targetItem = e.target;
   const targetItemCode = targetItem.getAttribute('key_code');
-  if (targetItem.classList.contains('key') && !SPECIAL_KEYS.includes(targetItemCode) && capsLock) {
-    TEXTAREA.value += KEYS[targetItemCode].main[lang];
-  } else if (targetItem.classList.contains('key') && !SPECIAL_KEYS.includes(targetItemCode) && !capsLock) {
-    TEXTAREA.value += KEYS[targetItemCode].main[lang].toLowerCase();
+  if ((targetItem.classList.contains('key') && !SPECIAL_KEYS.includes(targetItemCode))) {
+    if (capsLock && !shift) {
+      TEXTAREA.value += KEYS[targetItemCode].main[lang];
+    } else if (capsLock && shift) {
+      if (!KEYS[targetItemCode].additional) {
+        TEXTAREA.value += KEYS[targetItemCode].main[lang].toLowerCase();
+      } else {
+        TEXTAREA.value += KEYS[targetItemCode].additional[lang];
+      }
+    } else if (!capsLock && shift) {
+      if (!KEYS[targetItemCode].additional) {
+        TEXTAREA.value += KEYS[targetItemCode].main[lang];
+      } else {
+        TEXTAREA.value += KEYS[targetItemCode].additional[lang];
+      }
+    } else {
+      TEXTAREA.value += KEYS[targetItemCode].main[lang].toLowerCase();
+    }
   }
   if (targetItemCode === 'CapsLock') {
     capsLock = !capsLock;
+  }
+  if (targetItemCode === 'ShiftLeft' || targetItemCode === 'ShiftRight') {
+    shift = !shift;
     targetItem.classList.toggle('active');
-    renderingKeyText(KEYS_COLLECTION, lang, capsLock);
   }
 });
 
