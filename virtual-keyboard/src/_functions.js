@@ -55,7 +55,15 @@ function removeKeyPress(e) {
   }
 }
 
+function writeInTextarea(value) {
+  const start = TEXTAREA.selectionStart;
+  const leftHalf = TEXTAREA.value.slice(0, start);
+  const rightHalf = TEXTAREA.value.slice(start);
+  TEXTAREA.value = leftHalf + value + rightHalf;
+  TEXTAREA.setSelectionRange(start + 1, start + 1);
+}
+
 export {
   appendMultipleChildren, addKeyCode, renderingKeyText, addClassesForStyle,
-  addKeyPress, removeKeyPress,
+  addKeyPress, removeKeyPress, writeInTextarea,
 };

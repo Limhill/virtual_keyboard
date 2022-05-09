@@ -3,6 +3,7 @@ const HEADER = document.createElement('h1');
 const TEXTAREA = document.createElement('textarea');
 const WRAPPER = document.createElement('div');
 const KEYBOARD = document.createElement('div');
+const ADDITIONAL_INFO = document.createElement('h2');
 const ROW = document.createElement('div');
 const KEY = document.createElement('div');
 const DOUBLE_WIDTH_KEYS = ['CapsLock', 'Enter', 'Backspace'];
@@ -78,10 +79,9 @@ const KEYS = {
 const SPECIAL_KEYS = [
   'Backspace', 'Tab', 'Delete', 'CapsLock', 'Enter', 'ShiftLeft', 'ShiftRight',
   'ControlLeft', 'ControlRight', 'MetaLeft', 'AltLeft', 'AltRight',
-  'ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight',
 ];
 
 export {
-  BODY, HEADER, TEXTAREA, WRAPPER, KEYBOARD, ROW, KEY,
+  BODY, HEADER, TEXTAREA, WRAPPER, KEYBOARD, ADDITIONAL_INFO, ROW, KEY,
   KEYS, SPECIAL_KEYS, DOUBLE_WIDTH_KEYS, TRIPLE_WIDTH_KEYS,
 };

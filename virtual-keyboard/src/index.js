@@ -1,10 +1,10 @@
 import './main.sass';
 import {
   appendMultipleChildren, addKeyCode, renderingKeyText, addClassesForStyle,
-  addKeyPress, removeKeyPress,
+  addKeyPress, removeKeyPress, writeInTextarea,
 } from './_functions';
 import {
-  BODY, HEADER, TEXTAREA, WRAPPER, KEYBOARD, ROW, KEY, SPECIAL_KEYS, KEYS,
+  BODY, HEADER, TEXTAREA, WRAPPER, KEYBOARD, ADDITIONAL_INFO, ROW, KEY, SPECIAL_KEYS, KEYS,
 } from './_constants';
 
 // Присваиваем классы
@@ -20,6 +20,7 @@ BODY.appendChild(WRAPPER);
 WRAPPER.appendChild(HEADER);
 WRAPPER.appendChild(TEXTAREA);
 WRAPPER.appendChild(KEYBOARD);
+WRAPPER.appendChild(ADDITIONAL_INFO);
 appendMultipleChildren(KEYBOARD, ROW, 5);
 
 const rowsCollection = document.querySelectorAll('.row');
@@ -31,6 +32,7 @@ appendMultipleChildren(rowsCollection[4], KEY, 9);
 
 // Присваиваем значения
 HEADER.textContent = 'Клавиатура создана в ОС Windows';
+ADDITIONAL_INFO.textContent = 'Клавиши для смены языка: Shift + левый Alt';
 TEXTAREA.setAttribute('rows', '10');
 TEXTAREA.setAttribute('cols', '120');
 
@@ -98,21 +100,27 @@ KEYBOARD.addEventListener('mousedown', (e) => {
 
   if ((targetItem.classList.contains('key') && !SPECIAL_KEYS.includes(targetItemCode))) {
     if (capsLock && !shift) {
-      TEXTAREA.value += KEYS[targetItemCode].main[lang];
+      const newValue = KEYS[targetItemCode].main[lang];
+      writeInTextarea(newValue);
     } else if (capsLock && shift) {
       if (!KEYS[targetItemCode].additional) {
-        TEXTAREA.value += KEYS[targetItemCode].main[lang].toLowerCase();
+        const newValue = KEYS[targetItemCode].main[lang].toLowerCase();
+        writeInTextarea(newValue);
       } else {
-        TEXTAREA.value += KEYS[targetItemCode].additional[lang];
+        const newValue = KEYS[targetItemCode].additional[lang];
+        writeInTextarea(newValue);
       }
     } else if (!capsLock && shift) {
       if (!KEYS[targetItemCode].additional) {
-        TEXTAREA.value += KEYS[targetItemCode].main[lang];
+        const newValue = KEYS[targetItemCode].main[lang];
+        writeInTextarea(newValue);
       } else {
-        TEXTAREA.value += KEYS[targetItemCode].additional[lang];
+        const newValue = KEYS[targetItemCode].additional[lang];
+        writeInTextarea(newValue);
       }
     } else {
-      TEXTAREA.value += KEYS[targetItemCode].main[lang].toLowerCase();
+      const newValue = KEYS[targetItemCode].main[lang].toLowerCase();
+      writeInTextarea(newValue);
     }
   }
 
@@ -140,6 +148,11 @@ KEYBOARD.addEventListener('mousedown', (e) => {
       }
     });
     renderingKeyText(KEYS_COLLECTION, lang);
+  }
+
+  if (targetItemCode === 'Tab') {
+    e.preventDefault();
+    TEXTAREA.value += '    ';
   }
 });
 
