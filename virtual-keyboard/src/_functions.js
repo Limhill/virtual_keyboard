@@ -1,4 +1,6 @@
-import { SPECIAL_KEYS, TEXTAREA } from './_constants';
+import {
+  DOUBLE_WIDTH_KEYS, KEYS, SPECIAL_KEYS, TEXTAREA,
+} from './_constants';
 
 function appendMultipleChildren(parentElement, childElement, numberOfCopies, deepCopies = false) {
   for (let i = 0; i < numberOfCopies; i += 1) {
@@ -7,28 +9,56 @@ function appendMultipleChildren(parentElement, childElement, numberOfCopies, dee
   }
 }
 
+function addKeyCode(listOfKeys) {
+  const keyList = listOfKeys;
+  for (let i = 0; i < keyList.length; i += 1) {
+    keyList.forEach((key, index) => {
+      key.setAttribute('key_code', Object.keys(KEYS)[index]);
+    });
+  }
+}
+
+function renderingKeyText(listOfKeys, lang, caps) {
+  const keyList = listOfKeys;
+  for (let i = 0; i < keyList.length; i += 1) {
+    const keyCode = keyList[i].getAttribute('key_code');
+    if (!caps && !SPECIAL_KEYS.includes(keyCode)) {
+      keyList[i].textContent = KEYS[keyCode].main[lang].toLowerCase();
+    } else {
+      keyList[i].textContent = KEYS[keyCode].main[lang];
+    }
+    if (KEYS[keyCode].additional) {
+      const additionalValue = document.createElement('span');
+      additionalValue.textContent = KEYS[keyCode].additional[lang];
+      keyList[i].insertBefore(additionalValue, keyList[i].firstChild);
+    }
+  }
+}
+
+function addClassesForStyle(listOfKeys) {
+  const keyList = listOfKeys;
+  keyList.forEach((item) => {
+    if (DOUBLE_WIDTH_KEYS.includes(item.getAttribute('key_code'))) item.classList.add('key_double-width');
+    if (item.getAttribute('key_code') === 'Space') item.classList.add('space');
+  });
+}
+
 function addKeyPress(e) {
   const targetItem = e.target;
-  if (e.target.classList.contains('key') && !e.target.classList.contains('key_pressed')) {
+  if (targetItem.classList.contains('key') && !targetItem.classList.contains('key_pressed')) {
     targetItem.classList.add('key_pressed');
   }
 }
 
 function removeKeyPress(e) {
   const targetItem = e.target;
-  if (e.target.classList.contains('key') && e.target.classList.contains('key_pressed')) {
+  if (targetItem.classList.contains('key') && targetItem.classList.contains('key_pressed')) {
     targetItem.classList.remove('key_pressed');
     TEXTAREA.focus();
   }
 }
 
-function keyboardWork(e) {
-  const targetItem = e.target;
-  if (targetItem.classList.contains('key') && !SPECIAL_KEYS.includes(targetItem.textContent)) {
-    TEXTAREA.value += targetItem.textContent;
-  }
-}
-
 export {
-  appendMultipleChildren, addKeyPress, removeKeyPress, keyboardWork,
+  appendMultipleChildren, addKeyCode, renderingKeyText, addClassesForStyle,
+  addKeyPress, removeKeyPress,
 };
