@@ -67,7 +67,7 @@ function writeInTextarea(value) {
   }
 }
 
-function deleteSymbol() {
+function deleteSymbolBeforeCursor() {
   const start = TEXTAREA.selectionStart;
   let leftHalf = TEXTAREA.value.slice(0, start);
   leftHalf = leftHalf.slice(0, -1);
@@ -80,7 +80,17 @@ function deleteSymbol() {
   }
 }
 
+function deleteSymbolAfterCursor() {
+  const start = TEXTAREA.selectionStart;
+  const leftHalf = TEXTAREA.value.slice(0, start);
+  let rightHalf = TEXTAREA.value.slice(start);
+  rightHalf = rightHalf.slice(1);
+  TEXTAREA.value = leftHalf + rightHalf;
+  TEXTAREA.setSelectionRange(start, start);
+}
+
 export {
   appendMultipleChildren, addKeyCode, renderingKeyText, addClassesForStyle,
-  addKeyPress, removeKeyPress, writeInTextarea, deleteSymbol,
+  addKeyPress, removeKeyPress, writeInTextarea, deleteSymbolBeforeCursor,
+  deleteSymbolAfterCursor,
 };

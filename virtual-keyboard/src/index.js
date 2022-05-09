@@ -1,7 +1,8 @@
 import './main.sass';
 import {
   appendMultipleChildren, addKeyCode, renderingKeyText, addClassesForStyle,
-  addKeyPress, removeKeyPress, writeInTextarea, deleteSymbol,
+  addKeyPress, removeKeyPress, writeInTextarea, deleteSymbolBeforeCursor,
+  deleteSymbolAfterCursor,
 } from './_functions';
 import {
   BODY, HEADER, TEXTAREA, WRAPPER, KEYBOARD, ADDITIONAL_INFO, ROW, KEY, SPECIAL_KEYS, KEYS,
@@ -157,7 +158,16 @@ KEYBOARD.addEventListener('mousedown', (e) => {
   }
 
   if (targetItemCode === 'Backspace') {
-    deleteSymbol();
+    deleteSymbolBeforeCursor();
+  }
+
+  if (targetItemCode === 'Delete') {
+    deleteSymbolAfterCursor();
+  }
+
+  if (targetItemCode === 'Enter') {
+    const newValue = '\n';
+    writeInTextarea(newValue);
   }
 });
 
