@@ -83,6 +83,10 @@ window.addEventListener('keydown', (e) => {
       KEYS_COLLECTION[i].classList.toggle('active');
       shift = KEYS_COLLECTION[i].classList.contains('active');
     }
+    if (e.code === 'CapsLock' && e.code === KEYS_COLLECTION[i].getAttribute('key_code')) {
+      KEYS_COLLECTION[i].classList.toggle('active');
+      capsLock = KEYS_COLLECTION[i].classList.contains('active');
+    }
     if (e.altKey && shift) {
       e.preventDefault();
       changeLanguage();
@@ -102,10 +106,6 @@ window.addEventListener('keyup', (e) => {
     if (e.code === KEYS_COLLECTION[i].getAttribute('key_code')) {
       KEYS_COLLECTION[i].classList.remove('key_pressed');
     }
-  }
-  if (e.code === 'CapsLock') {
-    capsLock = !capsLock;
-    renderingKeyText(KEYS_COLLECTION, lang);
   }
   if (e.altKey) {
     e.preventDefault();
@@ -144,6 +144,7 @@ KEYBOARD.addEventListener('mousedown', (e) => {
 
   if (targetItemCode === 'CapsLock') {
     capsLock = !capsLock;
+    targetItem.classList.toggle('active');
   }
 
   if (targetItemCode === 'ShiftLeft' || targetItemCode === 'ShiftRight') {
