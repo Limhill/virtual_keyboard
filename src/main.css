@@ -1,0 +1,95 @@
+.body {
+  padding: 0;
+  margin: 0;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-template-columns: 100%;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.keyboard {
+  background-color: #d062ef;
+  margin: 75px auto;
+  padding: 20px 10px;
+  border-radius: 15px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  justify-content: center;
+  box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
+}
+
+.row {
+  padding: 5px;
+  margin-top: 5px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.textarea {
+  font-size: 16px;
+  resize: none;
+}
+
+.key {
+  background-color: #353535;
+  color: #fdf6ff;
+  font-family: var(--font-m);
+  font-size: 12px;
+  width: 46px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0 4px;
+  padding: 0 2px;
+  border-radius: 10px;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+.key_double-width {
+  width: 108px;
+}
+.key_triple-width {
+  width: 168px;
+}
+.key_pressed {
+  cursor: pointer;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+  transform: translateY(3px);
+  background: #61c29d;
+  transition: all 0.1s ease-in-out;
+}
+
+.active {
+  cursor: pointer;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+  transform: translateY(3px);
+  background: #61c29d;
+  transition: all 0.1s ease-in-out;
+}
+
+.key:hover {
+  background: #61c29d;
+  cursor: pointer;
+}
+
+.space {
+  width: 400px;
+}
+
+/*# sourceMappingURL=main.css.map */
