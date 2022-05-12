@@ -41,12 +41,16 @@ const KEYS_COLLECTION = document.querySelectorAll('.key');
 let lang = localStorage.getItem('lang') || 'en';
 let capsLock = false;
 let shift = false;
-let bigLetters;
 
-if (capsLock && shift) bigLetters = false;
-if (capsLock && !shift) bigLetters = true;
-if (!capsLock && shift) bigLetters = true;
-if (!capsLock && !shift) bigLetters = false;
+function changeLanguage() {
+  if (lang === 'en') {
+    lang = 'ru';
+    localStorage.setItem('lang', 'ru');
+  } else if (lang === 'ru') {
+    lang = 'en';
+    localStorage.setItem('lang', 'en');
+  }
+}
 
 // Добавляю коды для кнопок
 addKeyCode(KEYS_COLLECTION);
@@ -73,9 +77,22 @@ window.addEventListener('keydown', (e) => {
     }
     if (e.code === 'ShiftLeft' && e.code === KEYS_COLLECTION[i].getAttribute('key_code')) {
       KEYS_COLLECTION[i].classList.toggle('active');
+      shift = KEYS_COLLECTION[i].classList.contains('active');
     }
     if (e.code === 'ShiftRight' && e.code === KEYS_COLLECTION[i].getAttribute('key_code')) {
       KEYS_COLLECTION[i].classList.toggle('active');
+      shift = KEYS_COLLECTION[i].classList.contains('active');
+    }
+    if (e.altKey && shift) {
+      e.preventDefault();
+      changeLanguage();
+      shift = false;
+      KEYS_COLLECTION.forEach((key) => {
+        if (key.getAttribute('key_code') === 'ShiftLeft' || key.getAttribute('key_code') === 'ShiftRight') {
+          key.classList.remove('active');
+        }
+      });
+      renderingKeyText(KEYS_COLLECTION, lang);
     }
   }
 });
@@ -88,7 +105,10 @@ window.addEventListener('keyup', (e) => {
   }
   if (e.code === 'CapsLock') {
     capsLock = !capsLock;
-    renderingKeyText(KEYS_COLLECTION, lang, bigLetters);
+    renderingKeyText(KEYS_COLLECTION, lang);
+  }
+  if (e.altKey) {
+    e.preventDefault();
   }
 });
 
@@ -132,14 +152,8 @@ KEYBOARD.addEventListener('mousedown', (e) => {
   }
 
   if (targetItemCode === 'AltLeft' && shift) {
-    if (lang === 'en') {
-      lang = 'ru';
-      localStorage.setItem('lang', 'ru');
-    } else if (lang === 'ru') {
-      lang = 'en';
-      localStorage.setItem('lang', 'en');
-    }
     shift = false;
+    changeLanguage();
     KEYS_COLLECTION.forEach((key) => {
       if (key.getAttribute('key_code') === 'ShiftLeft' || key.getAttribute('key_code') === 'ShiftRight') {
         key.classList.remove('active');
